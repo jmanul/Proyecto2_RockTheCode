@@ -92,4 +92,60 @@ const products = [
   }
 ];
 
+const productSection = document.querySelector('section.products');
 
+for (let i = 0; i < products.length; i++) {
+
+  const product = products[i]
+ 
+  const productArticle = document.createElement('article');
+  productSection.append(productArticle);
+
+  const productA = document.createElement('a');
+  productA.href = '#';
+  productArticle.append(productA);
+
+  const productDivImage = document.createElement('div');
+  productDivImage.className = 'divImage';
+  productA.append(productDivImage);
+
+  const productImage = document.createElement('img');
+  productImage.src = product.image;
+  productDivImage.append(productImage);
+
+  const productHeart = document.createElement('i');
+  productHeart.className = 'bi bi-heart';
+  productDivImage.append(productHeart);
+
+  const productSeller = document.createElement('p');
+  productSeller.innerText = product.seller;
+  productA.append(productSeller);
+
+  const productName = document.createElement('p');
+  productName.innerText = product.name;
+  productA.append(productName);
+
+  const productDivPrice = document.createElement('div');
+  productDivPrice.classList.add('flex-container' , 'price');
+  productArticle.append(productDivPrice);
+
+  const productPrice = document.createElement('p');
+  productPrice.innerText = product.price;
+  productDivPrice.append(productPrice);
+
+  const productDivStars = document.createElement('div');
+  productDivStars.classList.add('flex-container' , 'stars');
+  productDivPrice.append(productDivStars);
+
+  const productStars = document.createElement('p');
+  productStars.innerText = product.stars;
+  productDivStars.append(productStars);  
+
+  const productReviews = document.createElement('p');
+  productReviews.innerText = product.reviews;
+  productDivStars.append(productReviews);
+
+
+ 
+
+};
