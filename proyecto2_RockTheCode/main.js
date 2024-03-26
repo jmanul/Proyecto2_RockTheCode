@@ -145,6 +145,10 @@ for (let i = 0; i < products.length; i++) {
   productReviews.innerText = product.reviews;
   productDivStars.append(productReviews);
 
+  const productInput = document.createElement('input');
+  productInput.type = 'button';
+  productInput.value = 'Añadir a carrito';
+  productArticle.append(productInput);
 
  
 
