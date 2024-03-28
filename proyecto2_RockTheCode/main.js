@@ -106,7 +106,7 @@ for (let i = 0; i < products.length; i++) {
   productArticle.append(productA);
 
   const productDivImage = document.createElement('div');
-  productDivImage.className = 'divImage';
+  productDivImage.classList.add('divImage' , 'flex-container');
   productA.append(productDivImage);
 
   const productImage = document.createElement('img');
@@ -118,10 +118,12 @@ for (let i = 0; i < products.length; i++) {
   productDivImage.append(productHeart);
 
   const productSeller = document.createElement('p');
+  productSeller.id = 'seller';
   productSeller.innerText = product.seller;
   productA.append(productSeller);
 
   const productName = document.createElement('p');
+  productName.id = 'name';
   productName.innerText = product.name;
   productA.append(productName);
 
@@ -130,6 +132,7 @@ for (let i = 0; i < products.length; i++) {
   productArticle.append(productDivPrice);
 
   const productPrice = document.createElement('p');
+  productPrice.id = 'price';
   productPrice.innerText = product.price;
   productDivPrice.append(productPrice);
 
@@ -137,13 +140,25 @@ for (let i = 0; i < products.length; i++) {
   productDivStars.classList.add('flex-container' , 'stars');
   productDivPrice.append(productDivStars);
 
+  const productSpanStars = document.createElement('span');
+  productSpanStars.className = 'bi bi-star-fill';
+  productDivStars.append(productSpanStars);
+
   const productStars = document.createElement('p');
   productStars.innerText = product.stars;
   productDivStars.append(productStars);  
 
+  const productDivReviewed = document.createElement('div');
+  productDivReviewed.classList.add( 'flex-container','reviewed');
+  productDivStars.append(productDivReviewed);
+
   const productReviews = document.createElement('p');
   productReviews.innerText = product.reviews;
-  productDivStars.append(productReviews);
+  productDivReviewed.append(productReviews);
+
+  const productSpanReviews = document.createElement('span');
+  productSpanReviews.className = 'bi bi-chat';
+  productDivReviewed.append(productSpanReviews);
 
   const productInput = document.createElement('input');
   productInput.type = 'button';
