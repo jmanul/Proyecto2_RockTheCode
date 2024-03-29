@@ -11,10 +11,10 @@
 
 :root {
 
-  --white:rgb(243, 243, 243);
+  --white: rgb(243, 243, 243);
   --black: #181818;
   --green: hsl(154, 29%, 47%);
-  --light-green:hsl(153, 52%, 68%);
+  --light-green: hsl(152, 27%, 37%);
   --red: rgb(242, 201, 202);
   --dark-grey: rgb(104, 103, 103);
   --light-grey: rgb(248, 248, 248);
@@ -31,9 +31,9 @@
 .flex-container {
 
   display: flex;
-  justify-items: center;
+  justify-items: flex-start;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
   align-content: center;
   gap: 10px;
@@ -64,41 +64,76 @@ body {
 
 main {
 
+
+  display: flex;
+  justify-items: flex-start;
+  align-items: flex-start;
   justify-content: center;
- 
+  text-align: center;
+  align-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+
 }
 
 
 
-section.products > article {
-   position: relative;
-   max-width: 220px;
-   height: 430px;
-   
-   text-align: left;
-     
+section.products {
+
+  width: 65%;
+  justify-content: flex-start;
+}
+
+section.filter {
+  
+  padding: 30px 20px;
+  width: 30%;
+  max-width: 300px;
+  min-width: 250px;
+  flex-direction: column;
+  gap: 50px
+}
+
+
+section.products>article {
+  position: relative;
+  max-width: 220px;
+  height: 430px;
+
+  text-align: left;
+
 }
 
 .divImage {
- 
+
   width: 100%;
   border: solid 1px var(--light-grey);
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 15px;
   background-color: var(--light-grey);
-  justify-content: center;
+
 
 }
 
-.divImage > img {
- 
+.divImage>img {
+
   width: 90%;
-  
-  
+  transition: .3s;
+
 }
 
-.divImage i {
+section.products .divImage :nth-child(3) {
+
+  opacity: 0;
+
+  &:hover {
+
+    opacity: 100%;
+  }
+}
+
+section.products .divImage i {
 
   position: absolute;
   top: 7px;
@@ -106,26 +141,20 @@ section.products > article {
   color: var(--dark-grey);
   font-size: 1.2em;
   opacity: 60%;
+  transition: .3s;
 
-  /* &:hover {
-
-    
-
-          <i class="bi bi-heart-fill"></i>
-        
-        
-  }
-  */
 }
+
+
 
 section.products p {
 
   padding: 5px 10px 0 10px;
 }
 
-section.products a:hover  img{
+section.products a:hover img {
 
-    opacity: 60%;
+  opacity: 60%;
 }
 
 #seller {
@@ -146,42 +175,41 @@ section.products a:hover  img{
 
 section.products .price {
   position: absolute;
-  bottom:60px;
+  bottom: 60px;
   width: 100%;
   justify-content: space-between;
- 
+
 }
 
 #price {
-  
+
   margin-right: 5px;
   font-size: 23px;
   font-family: var(--titulo);
   font-weight: 600;
-  
+
 }
 
 #price::after {
-  
+
   font-size: 17px;
   content: " € ";
 }
 
 section.products .stars {
   position: relative;
-  background-color:var(--blue-grey);
-  border-radius:5px;
+  background-color: var(--blue-grey);
+  border-radius: 5px;
   margin-right: 5px;
   width: fit-content;
   padding: 4px;
-  justify-content: center;
   gap: 2px;
   flex-wrap: nowrap;
   font-size: .9em;
   font-family: var(--texto);
   font-weight: 600;
   color: var(--green);
-  
+
 }
 
 section.products .stars p {
@@ -191,48 +219,182 @@ section.products .stars p {
 }
 
 section.products .stars .reviewed {
-  flex-wrap: nowrap;  
+  flex-wrap: nowrap;
   gap: 0;
   padding-left: 5px;
   color: var(--dark-grey);
 
-  &>span{
+  &>span {
     padding-left: 3px;
     font-size: .9em;
   }
 
   &::after {
 
-    content:')';
+    content: ')';
   }
 
   &::before {
 
-    content:'(';
+    content: '(';
   }
 
- 
+
 }
 
 
 section.products input {
-    cursor: pointer;
-    position:absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 45px;
-    border:none;
-    border-radius:5px;
-    background-color:var(--green);
-    color:var(--white);
-    font-size: 16px;
-    font-weight: 600;
-    font-family: var(--texto);
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--green);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--texto);
+  transition: .3s;
 
-      &:hover {
-      
-          background-color: var(--light-green)
-        }
+  &:hover {
+
+    background-color: var(--light-green)
+  }
+
+
 
 }
+ header .filterSearchDiv input,
+ header .filterSearchDiv button,
+.filter input,
+.filter button,
+.filter select,
+.filter option {
+
+  cursor: pointer;
+  border: 2px solid var(--blue-grey);
+  padding: 0 15px;
+  border-radius: 25px;
+  background: transparent;
+  width: 100%;
+  height: 40px;
+  font-family: var(--texto);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--dark-grey);
+}
+
+.filter select > option:checked{
+
+   color: #181818;
+}
+
+.filter button {
+
+  background: var(--white);
+  transition: .2s;
+
+  &:hover {
+
+    background: var(--blue-grey);
+  }
+
+
+}
+
+.filter .filterPriceDiv,
+header .filterSearchDiv {
+
+  flex-wrap: nowrap;
+  gap: 0;
+
+
+}
+
+header .filterSearchDiv {
+
+  width: 100% ;
+  max-width: 600px;
+  min-width: 100px;
+  padding: 20px 40px;
+}
+
+.filter .filterPriceDiv button, 
+ header .filterSearchDiv button{
+ 
+  width: 40%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+  background: var(--white);
+
+  &:hover {
+
+    background: var(--blue-grey);
+  }
+
+
+}
+
+.filter .filterPriceDiv input,
+ header .filterSearchDiv input {
+  font-size: 12px;
+  font-style: italic;
+  width: 60%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transition: .3s;
+
+  &:focus {
+    outline: none;
+    border: .5px solid var(--dark-grey);
+  }
+
+}
+
+ header .filterSearchDiv input {
+  background: var(--light-grey);
+  border-right:none;
+  width: 90%;
+  height: 50px;
+
+ }
+
+
+ header .filterSearchDiv button {
+
+   border-right: none;
+   width: 20%;
+   text-align: right;
+   background:var(--light-grey);
+   height: 50px;
+   border-radius: 100;
+
+ }
+
+
+ header .filterSearchDiv i {
+
+  background: var(--green);
+  color: var(--white);
+  padding: 10px ;
+  border-radius:50%
+ }
+
+.filter select {
+  appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+  transition: .3s;
+
+  &:focus {
+    outline: none;
+    border: .5px solid var(--dark-grey);
+  }
+
+}
+

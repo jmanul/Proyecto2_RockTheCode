@@ -117,6 +117,10 @@ for (let i = 0; i < products.length; i++) {
   productHeart.className = 'bi bi-heart';
   productDivImage.append(productHeart);
 
+  const productHeartHover = document.createElement('i');
+  productHeartHover.className = 'bi bi-heart-fill';
+  productDivImage.append(productHeartHover);
+
   const productSeller = document.createElement('p');
   productSeller.id = 'seller';
   productSeller.innerText = product.seller;
@@ -168,3 +172,86 @@ for (let i = 0; i < products.length; i++) {
  
 
 };
+
+const header = document.querySelector('header');
+header.classList.add('flex-container');
+
+const filterSearchDiv = document.createElement('div');
+filterSearchDiv.classList.add('filterSearchDiv', 'flex-container');
+header.append(filterSearchDiv);
+
+const filterSearchInput = document.createElement('input');
+filterSearchInput.id = 'filterSearchInput';
+filterSearchInput.type = 'search';
+filterSearchInput.placeholder = 'Buscar';
+filterSearchDiv.append(filterSearchInput);
+
+const filterSearchButton = document.createElement('button');
+filterSearchButton.id = 'filterSearchButton';
+filterSearchButton.type = 'submit';
+filterSearchDiv.append(filterSearchButton);
+
+const filterSearchIcon = document.createElement('i');
+filterSearchIcon.className = 'bi bi-search';
+filterSearchButton.append(filterSearchIcon);
+
+const filterSection = document.querySelector('section.filter');
+
+const filterSelectSeller = document.createElement('select');
+filterSelectSeller.name = 'filterSeller';
+filterSelectSeller.id = 'filterSeller';
+filterSection.append(filterSelectSeller);
+
+const filterOptionSeller = document.createElement('option');
+filterOptionSeller.value = '';
+filterOptionSeller.innerText = 'Marcas';
+filterSelectSeller.append(filterOptionSeller);
+
+const optionSellerCreate = (clave, list) => {
+  
+  const listItem = [];
+
+  for (const item of list) {
+
+    for (const i in item) {
+
+      if (!listItem.includes(item[i]) && i === clave) {
+        
+        const filterOptionSeller = document.createElement('option');
+        filterOptionSeller.value = item[i];
+        filterOptionSeller.innerText = item[i];
+        filterSelectSeller.append(filterOptionSeller);
+        listItem.push(item[i]);
+
+      }
+ 
+    }  
+
+  };
+};
+
+optionSellerCreate('seller', products);
+
+const filterPriceDiv = document.createElement('div');
+filterPriceDiv.classList.add('filterPriceDiv','flex-container');
+filterSection.append(filterPriceDiv);
+
+
+const filterPriceInput = document.createElement('input');
+filterPriceInput.id = 'filterPrice';
+filterPriceInput.type = 'number';
+filterPriceInput.placeholder = 'Precio hasta';
+filterPriceDiv.append(filterPriceInput);
+
+const filterPriceButton = document.createElement('button');
+filterPriceButton.id = 'filterPriceButton';
+filterPriceButton.type = 'submit';
+filterPriceButton.innerText = 'Buscar';
+filterPriceDiv.append(filterPriceButton);
+
+const filterResetButton = document.createElement('button');
+filterResetButton.id = 'filterResetButton';
+filterResetButton.type = 'reset';
+filterResetButton.innerText = 'Limpiar Filtros';
+filterSection.append(filterResetButton);
+
