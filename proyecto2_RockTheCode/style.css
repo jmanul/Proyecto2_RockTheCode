@@ -333,7 +333,7 @@ header .filterSearchDiv {
 
   &:hover {
 
-    background: var(--blue-grey);
+    background-color: var(--blue-grey);
   }
 
 

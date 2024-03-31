@@ -94,84 +94,88 @@ const products = [
 
 const productSection = document.querySelector('section.products');
 
-for (let i = 0; i < products.length; i++) {
+const createArticle = (list) => {
+  for (let i = 0; i < list.length; i++) {
 
-  const product = products[i]
+    const product = list[i]
  
-  const productArticle = document.createElement('article');
-  productSection.append(productArticle);
+    const productArticle = document.createElement('article');
+    productSection.append(productArticle);
 
-  const productA = document.createElement('a');
-  productA.href = '#';
-  productArticle.append(productA);
+    const productA = document.createElement('a');
+    productA.href = '#';
+    productArticle.append(productA);
 
-  const productDivImage = document.createElement('div');
-  productDivImage.classList.add('divImage' , 'flex-container');
-  productA.append(productDivImage);
+    const productDivImage = document.createElement('div');
+    productDivImage.classList.add('divImage', 'flex-container');
+    productA.append(productDivImage);
 
-  const productImage = document.createElement('img');
-  productImage.src = product.image;
-  productDivImage.append(productImage);
+    const productImage = document.createElement('img');
+    productImage.src = product.image;
+    productDivImage.append(productImage);
 
-  const productHeart = document.createElement('i');
-  productHeart.className = 'bi bi-heart';
-  productDivImage.append(productHeart);
+    const productHeart = document.createElement('i');
+    productHeart.className = 'bi bi-heart';
+    productDivImage.append(productHeart);
 
-  const productHeartHover = document.createElement('i');
-  productHeartHover.className = 'bi bi-heart-fill';
-  productDivImage.append(productHeartHover);
+    const productHeartHover = document.createElement('i');
+    productHeartHover.className = 'bi bi-heart-fill';
+    productDivImage.append(productHeartHover);
 
-  const productSeller = document.createElement('p');
-  productSeller.id = 'seller';
-  productSeller.innerText = product.seller;
-  productA.append(productSeller);
+    const productSeller = document.createElement('p');
+    productSeller.id = 'seller';
+    productSeller.innerText = product.seller;
+    productA.append(productSeller);
 
-  const productName = document.createElement('p');
-  productName.id = 'name';
-  productName.innerText = product.name;
-  productA.append(productName);
+    const productName = document.createElement('p');
+    productName.id = 'name';
+    productName.innerText = product.name;
+    productA.append(productName);
 
-  const productDivPrice = document.createElement('div');
-  productDivPrice.classList.add('flex-container' , 'price');
-  productArticle.append(productDivPrice);
+    const productDivPrice = document.createElement('div');
+    productDivPrice.classList.add('flex-container', 'price');
+    productArticle.append(productDivPrice);
 
-  const productPrice = document.createElement('p');
-  productPrice.id = 'price';
-  productPrice.innerText = product.price;
-  productDivPrice.append(productPrice);
+    const productPrice = document.createElement('p');
+    productPrice.id = 'price';
+    productPrice.innerText = product.price;
+    productDivPrice.append(productPrice);
 
-  const productDivStars = document.createElement('div');
-  productDivStars.classList.add('flex-container' , 'stars');
-  productDivPrice.append(productDivStars);
+    const productDivStars = document.createElement('div');
+    productDivStars.classList.add('flex-container', 'stars');
+    productDivPrice.append(productDivStars);
 
-  const productSpanStars = document.createElement('span');
-  productSpanStars.className = 'bi bi-star-fill';
-  productDivStars.append(productSpanStars);
+    const productSpanStars = document.createElement('span');
+    productSpanStars.className = 'bi bi-star-fill';
+    productDivStars.append(productSpanStars);
 
-  const productStars = document.createElement('p');
-  productStars.innerText = product.stars;
-  productDivStars.append(productStars);  
+    const productStars = document.createElement('p');
+    productStars.innerText = product.stars;
+    productDivStars.append(productStars);
 
-  const productDivReviewed = document.createElement('div');
-  productDivReviewed.classList.add( 'flex-container','reviewed');
-  productDivStars.append(productDivReviewed);
+    const productDivReviewed = document.createElement('div');
+    productDivReviewed.classList.add('flex-container', 'reviewed');
+    productDivStars.append(productDivReviewed);
 
-  const productReviews = document.createElement('p');
-  productReviews.innerText = product.reviews;
-  productDivReviewed.append(productReviews);
+    const productReviews = document.createElement('p');
+    productReviews.innerText = product.reviews;
+    productDivReviewed.append(productReviews);
 
-  const productSpanReviews = document.createElement('span');
-  productSpanReviews.className = 'bi bi-chat';
-  productDivReviewed.append(productSpanReviews);
+    const productSpanReviews = document.createElement('span');
+    productSpanReviews.className = 'bi bi-chat';
+    productDivReviewed.append(productSpanReviews);
 
-  const productInput = document.createElement('input');
-  productInput.type = 'button';
-  productInput.value = 'Añadir a carrito';
-  productArticle.append(productInput);
+    const productInput = document.createElement('input');
+    productInput.type = 'button';
+    productInput.value = 'Añadir a carrito';
+    productArticle.append(productInput);
 
  
 
+  };
 };
+
+createArticle(products);
 
 const header = document.querySelector('header');
 header.classList.add('flex-container');
@@ -255,3 +259,180 @@ filterResetButton.type = 'reset';
 filterResetButton.innerText = 'Limpiar Filtros';
 filterSection.append(filterResetButton);
 
+
+
+const searchOptionSeller = (e) => {
+
+  const searchOptionSellerList = [];
+
+  productSection.innerHTML = ``;
+
+  for (const product of products) { 
+   
+    if (e.target.value === product.seller) {
+  
+      searchOptionSellerList.push(product);
+      
+    } else if (e.target.value === '') {
+      
+      createArticle(products);
+      return;
+    }
+  }
+
+  createArticle(searchOptionSellerList);
+}
+
+const searchOptionPrice = () => { 
+
+  const searchOptionPriceList = [];
+
+  productSection.innerHTML = ``;
+
+  for (const product of products) {
+
+
+    if (filterPriceInput.value > product.price) {
+      
+      searchOptionPriceList.push(product);
+    }
+
+}
+  createArticle(searchOptionPriceList);  
+}
+
+const resetOption = () => { 
+
+  productSection.innerHTML = ``;
+  createArticle(products);
+  filterPriceInput.value = 0;
+  filterSelectSeller.value = '';
+  filterSearchInput.value = '';
+
+}
+
+const searchOptionName = () => {
+
+  const searchOptionNameList = [];
+
+  productSection.innerHTML = ``;
+
+  for (const product of products) {   
+   const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+   
+   const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+  
+
+    if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
+     
+      searchOptionNameList.push(product);
+    
+
+    } else if (filterSearchInput.value === '') {
+      
+    
+      createArticle(products);
+      return;
+     }
+
+  }
+   createArticle(searchOptionNameList);  
+
+}
+
+
+
+
+filterSelectSeller.addEventListener('change', searchOptionSeller);
+filterPriceButton.onclick = searchOptionPrice;
+filterResetButton.onclick = resetOption;
+filterSearchButton.onclick = searchOptionName;
+
+
+
+// const searchOptionSeller = (e) => {
+
+//   const searchOptionSellerList = [];
+
+//   productSection.innerHTML = ``;
+
+//   for (const product of products) {
+
+//     if (e.target.value === product.seller) {
+
+//       searchOptionSellerList.push(product);
+
+//     } else if (e.target.value === '') {
+
+//       createArticle(products);
+//       return;
+//     }
+//   }
+
+//   createArticle(searchOptionSellerList);
+// }
+
+// const searchOptionPrice = () => {
+
+//   const searchOptionPriceList = [];
+
+//   productSection.innerHTML = ``;
+
+//   for (const product of products) {
+
+
+//     if (filterPriceInput.value > product.price) {
+
+//       searchOptionPriceList.push(product);
+//     }
+
+//   }
+//   createArticle(searchOptionPriceList);
+// }
+
+// const resetOption = () => {
+
+//   productSection.innerHTML = ``;
+//   createArticle(products);
+//   filterPriceInput.value = 0;
+//   filterSelectSeller.value = '';
+//   filterSearchInput.value = '';
+
+// }
+
+// const searchOptionName = () => {
+
+//   const searchOptionNameList = [];
+
+//   productSection.innerHTML = ``;
+
+//   for (const product of products) {
+//     const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+//     const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+
+//     if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
+
+//       searchOptionNameList.push(product);
+
+
+//     } else if (filterSearchInput.value === '') {
+
+
+//       createArticle(products);
+//       return;
+//     }
+
+//   }
+//   createArticle(searchOptionNameList);
+
+// }
+
+
+
+
+// filterSelectSeller.addEventListener('change', searchOptionSeller);
+// filterPriceButton.onclick = searchOptionPrice;
+// filterResetButton.onclick = resetOption;
+// filterSearchButton.onclick = searchOptionName;
