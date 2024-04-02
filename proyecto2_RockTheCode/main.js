@@ -92,7 +92,139 @@ const products = [
   }
 ];
 
+const itenNavVar = [
+
+  {
+    name: 'Ayuda',
+    icon: 'bi bi-headset',
+    URL: '#'
+  },
+  {
+    name: 'Habituales',
+    icon: 'bi bi-bag-heart',
+    URL: '#'
+  },
+  {
+    name: 'Marca PH',
+    icon: 'bi bi-patch-check-fill',
+    URL: '#'
+  },
+  {
+    name: 'Cuenta',
+    icon: 'bi bi-person',
+    URL: '#'
+  },
+  {
+    name: 'Cesta',
+    icon: 'bi bi-cart2',
+    URL: '#'
+  }
+]
+
+const itenRss = [
+
+  {
+    name: '',
+    icon: 'bi bi-facebook',
+    URL: '#'
+  },
+  {
+    name: '',
+    icon: 'bi bi-instagram',
+    URL: '#'
+  },
+  {
+    name: '',
+    icon: 'bi bi-linkedin',
+    URL: '#'
+  },
+  {
+    name: '',
+    icon: 'bi bi-twitter-x',
+    URL: '#'
+  },
+  {
+    name: '',
+    icon: 'bi bi-youtube',
+    URL: '#'
+  },
+  {
+    name: '',
+    icon: 'bi bi-tiktok',
+    URL: '#'
+  }
+  
+]
+
+
 const productSection = document.querySelector('section.products');
+const header = document.querySelector('header');
+const footer = document.querySelector('footer');
+
+
+const divLogoHeader = document.createElement('div');
+divLogoHeader.className = 'divLogoHeader';
+header.append(divLogoHeader);
+
+const logoHeader = document.createElement('img');
+logoHeader.className = 'logoHeader';
+logoHeader.src = 'full-logo.svg'
+divLogoHeader.append(logoHeader);
+
+const filterSearchDiv = document.createElement('div');
+filterSearchDiv.classList.add('filterSearchDiv', 'flex-container');
+header.append(filterSearchDiv);
+
+const filterSearchInput = document.createElement('input');
+filterSearchInput.id = 'filterSearchInput';
+filterSearchInput.type = 'search';
+filterSearchInput.placeholder = 'Buscar';
+filterSearchDiv.append(filterSearchInput);
+
+const filterSearchButton = document.createElement('button');
+filterSearchButton.id = 'filterSearchButton';
+filterSearchButton.type = 'submit';
+filterSearchDiv.append(filterSearchButton);
+
+const filterSearchIcon = document.createElement('i');
+filterSearchIcon.className = 'bi bi-search';
+filterSearchButton.append(filterSearchIcon);
+
+const createList = (list, section) => {
+
+  const ulList = document.createElement('ul');
+  ulList.className = 'flex-container';
+  section.append(ulList);
+  
+  for (let i = 0; i < list.length; i++) {
+      
+    const iten = list[i]
+
+    const liList = document.createElement('li');
+    ulList.append(liList);
+
+    const aList = document.createElement('a');
+    aList.href = iten.URL;
+    liList.append(aList);
+
+    const divList = document.createElement('div');
+    divList.className = 'divList';
+    aList.append(divList);
+
+    const iconList = document.createElement('i');
+    iconList.className = iten.icon;
+    divList.append(iconList);
+    const nameList = document.createElement('p');
+    nameList.innerText = iten.name;
+    divList.append(nameList);
+
+  }
+}
+
+createList(itenNavVar, header);
+createList(itenRss, footer);
+
+
 
 const createArticle = (list) => {
   for (let i = 0; i < list.length; i++) {
@@ -169,6 +301,7 @@ const createArticle = (list) => {
     productInput.type = 'button';
     productInput.value = 'Añadir a carrito';
     productArticle.append(productInput);
+ 
 
  
 
@@ -177,27 +310,7 @@ const createArticle = (list) => {
 
 createArticle(products);
 
-const header = document.querySelector('header');
-header.classList.add('flex-container');
 
-const filterSearchDiv = document.createElement('div');
-filterSearchDiv.classList.add('filterSearchDiv', 'flex-container');
-header.append(filterSearchDiv);
-
-const filterSearchInput = document.createElement('input');
-filterSearchInput.id = 'filterSearchInput';
-filterSearchInput.type = 'search';
-filterSearchInput.placeholder = 'Buscar';
-filterSearchDiv.append(filterSearchInput);
-
-const filterSearchButton = document.createElement('button');
-filterSearchButton.id = 'filterSearchButton';
-filterSearchButton.type = 'submit';
-filterSearchDiv.append(filterSearchButton);
-
-const filterSearchIcon = document.createElement('i');
-filterSearchIcon.className = 'bi bi-search';
-filterSearchButton.append(filterSearchIcon);
 
 const filterSection = document.querySelector('section.filter');
 
@@ -342,97 +455,13 @@ const searchOptionName = () => {
 
 
 
-
 filterSelectSeller.addEventListener('change', searchOptionSeller);
 filterPriceButton.onclick = searchOptionPrice;
 filterResetButton.onclick = resetOption;
 filterSearchButton.onclick = searchOptionName;
+footer.classList.add('flex-container');
 
-
-
-// const searchOptionSeller = (e) => {
-
-//   const searchOptionSellerList = [];
-
-//   productSection.innerHTML = ``;
-
-//   for (const product of products) {
-
-//     if (e.target.value === product.seller) {
-
-//       searchOptionSellerList.push(product);
-
-//     } else if (e.target.value === '') {
-
-//       createArticle(products);
-//       return;
-//     }
-//   }
-
-//   createArticle(searchOptionSellerList);
-// }
-
-// const searchOptionPrice = () => {
-
-//   const searchOptionPriceList = [];
-
-//   productSection.innerHTML = ``;
-
-//   for (const product of products) {
-
-
-//     if (filterPriceInput.value > product.price) {
-
-//       searchOptionPriceList.push(product);
-//     }
-
-//   }
-//   createArticle(searchOptionPriceList);
-// }
-
-// const resetOption = () => {
-
-//   productSection.innerHTML = ``;
-//   createArticle(products);
-//   filterPriceInput.value = 0;
-//   filterSelectSeller.value = '';
-//   filterSearchInput.value = '';
-
-// }
-
-// const searchOptionName = () => {
-
-//   const searchOptionNameList = [];
-
-//   productSection.innerHTML = ``;
-
-//   for (const product of products) {
-//     const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
-//     const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
-
-//     if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
-
-//       searchOptionNameList.push(product);
-
-
-//     } else if (filterSearchInput.value === '') {
-
-
-//       createArticle(products);
-//       return;
-//     }
-
-//   }
-//   createArticle(searchOptionNameList);
-
-// }
-
-
-
-
-// filterSelectSeller.addEventListener('change', searchOptionSeller);
-// filterPriceButton.onclick = searchOptionPrice;
-// filterResetButton.onclick = resetOption;
-// filterSearchButton.onclick = searchOptionName;
+const footerMaking = document.createElement('div');
+footerMaking.classList.add('flex-container', 'making');
+footer.append(footerMaking);
+footerMaking.innerHTML = `<span class="flex-container"><strong>Hecho por José Manuel Sánchez</strong><div class="pasttri-logo"><img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1710357027/pasttri_gstn60.webp" alt="logo pasttri"></div></span>`;

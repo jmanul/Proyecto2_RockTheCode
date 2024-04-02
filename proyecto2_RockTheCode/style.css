@@ -64,7 +64,7 @@ body {
 
 main {
 
-
+  padding-top: 250px ;
   display: flex;
   justify-items: flex-start;
   align-items: flex-start;
@@ -85,8 +85,8 @@ section.products {
 }
 
 section.filter {
-  
-  padding: 30px 20px;
+
+  padding: 30px;
   width: 30%;
   max-width: 300px;
   min-width: 250px;
@@ -132,6 +132,8 @@ section.products .divImage :nth-child(3) {
     opacity: 100%;
   }
 }
+
+
 
 section.products .divImage i {
 
@@ -267,8 +269,9 @@ section.products input {
 
 
 }
- header .filterSearchDiv input,
- header .filterSearchDiv button,
+
+header .filterSearchDiv input,
+header .filterSearchDiv button,
 .filter input,
 .filter button,
 .filter select,
@@ -287,9 +290,9 @@ section.products input {
   color: var(--dark-grey);
 }
 
-.filter select > option:checked{
+.filter select>option:checked {
 
-   color: #181818;
+  color: #181818;
 }
 
 .filter button {
@@ -315,16 +318,16 @@ header .filterSearchDiv {
 }
 
 header .filterSearchDiv {
-
-  width: 100% ;
+  /* position: absolute; */
+  width: 100%;
   max-width: 600px;
   min-width: 100px;
   padding: 20px 40px;
 }
 
-.filter .filterPriceDiv button, 
- header .filterSearchDiv button{
- 
+.filter .filterPriceDiv button,
+header .filterSearchDiv button {
+
   width: 40%;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -340,7 +343,7 @@ header .filterSearchDiv {
 }
 
 .filter .filterPriceDiv input,
- header .filterSearchDiv input {
+header .filterSearchDiv input {
   font-size: 12px;
   font-style: italic;
   width: 60%;
@@ -353,41 +356,93 @@ header .filterSearchDiv {
     border: .5px solid var(--dark-grey);
   }
 
+  &::placeholder {
+
+    color: var(--dark-grey);
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 50%;
+  }
+
 }
 
- header .filterSearchDiv input {
+header .filterSearchDiv input {
   background: var(--light-grey);
-  border-right:none;
+  border-right: none;
   width: 90%;
   height: 50px;
 
- }
+
+}
+
+.filter .filterPriceDiv input::placeholder {
+
+  font-size: 13px;
+}
 
 
- header .filterSearchDiv button {
+header .filterSearchDiv button {
 
-   border-right: none;
-   width: 20%;
-   text-align: right;
-   background:var(--light-grey);
-   height: 50px;
-   border-radius: 100;
+  border-right: none;
+  width: 20%;
+  text-align: right;
+  background: var(--light-grey);
+  height: 50px;
+  border-radius: 100;
 
- }
+}
+
+header ul {
+ 
+  min-width:fit-content ;
+  padding: 20px;
+}
+
+header ul div {
+  padding: 5px;
+  color: var(--black);
+  font-family: var(--texto);
+  font-weight: 600;
+  font-size: 11px;
+
+}
+
+header ul div > i {
+
+  font-size: 1.7rem;
+}
+
+header{
+
+  background: var(--light-grey);
+  position: fixed;
+  width: 100%;
+  height: 130px;
+  z-index: 5;
+
+  display: flex;
+  align-content:center;
+  align-items:center;
+  justify-self: center;
+  padding: 20px;
+  border-bottom: 2px solid var(--blue-grey);
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
 
 
- header .filterSearchDiv i {
+header .filterSearchDiv i {
 
   background: var(--green);
   color: var(--white);
-  padding: 10px ;
-  border-radius:50%
- }
+  padding: 10px;
+  border-radius: 50%
+}
 
 .filter select {
   appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
   transition: .3s;
 
@@ -395,6 +450,56 @@ header .filterSearchDiv {
     outline: none;
     border: .5px solid var(--dark-grey);
   }
+
+}
+
+
+footer{
+  position: relative;
+  background: var(--light-grey);
+  height: 200px;
+  margin-top: 80px;
+  border-top: 2px solid var(--blue-grey);
+
+}
+
+footer ul {
+
+  padding-top: 50px;
+}
+
+
+footer ul div {
+  width: 45px;
+  height: 45px;
+  background-color:var(--green);
+ padding-top: 8px;
+ font-size: 1.7rem;
+ color: var(--blue-grey);
+ border-radius:50%
+  
+}
+
+.pasttri-logo {
+
+  width: 20px;
+}
+
+.pasttri-logo img {
+
+  width: 100%;
+}
+
+.making strong {
+
+  opacity: 60%;
+}
+
+.making {
+  font-size: 15px;
+  padding-top: 50px;
+  bottom: 5px;
+  width: 100%;
 
 }
 
