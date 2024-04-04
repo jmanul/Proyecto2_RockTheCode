@@ -172,7 +172,7 @@ divLogoHeader.append(h1LogoHeader);
 
 const logoHeader = document.createElement('img');
 logoHeader.className = 'logoHeader';
-logoHeader.src = 'full-logo.svg'
+logoHeader.src = 'dist/assets/full-logo.svg'
 h1LogoHeader.append(logoHeader);
 
 const filterSearchDiv = document.createElement('div');
@@ -197,7 +197,7 @@ filterSearchButton.append(filterSearchIcon);
 const divTitleProducts = document.createElement('div');
 divTitleProducts.classList.add('flex-container' , 'divTitleProducts');
 divTitleProducts.innerHTML = `      <h2>DESCUBRE NUESTRA MARCA</h2>
-      <h3 class='flex-container'>   <div><img src="miniatura.png" alt="logo de planeta huerto"></div> PLANETA HUERTO</h3>`;
+      <h3 class='flex-container'>   <div><img src="dist/assets/miniatura.png" alt="logo de planeta huerto"></div> PLANETA HUERTO</h3>`;
 main.append(divTitleProducts);
 
 const createList = (list, section) => {
