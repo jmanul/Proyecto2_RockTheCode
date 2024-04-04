@@ -42,20 +42,6 @@
 }
 
 
-
-.grid-container {
-
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-
-}
-
-
-
 body {
 
   width: 100%;
@@ -63,17 +49,42 @@ body {
 }
 
 main {
-
+  position: relative;
   padding-top: 250px ;
   display: flex;
   justify-items: flex-start;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-around;
   text-align: center;
   align-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
 
+}
+
+main .divTitleProducts {
+
+  position: absolute;
+  top: 150px;
+  font-family: var(--titulo);
+  font-size: 20px;
+  
+
+  
+  width: 100%;
+  flex-direction: column;
+}
+
+main .divTitleProducts h2 {
+
+  font-weight: 800;
+}
+main .divTitleProducts h3 {
+
+  font-weight: 800;
+  font-size: 30px;
+  color:var(--green);
+  
 }
 
 
@@ -86,12 +97,14 @@ section.products {
 
 section.filter {
 
-  padding: 30px;
+  padding: 0 30px;
   width: 30%;
   max-width: 300px;
   min-width: 250px;
   flex-direction: column;
   gap: 50px
+
+
 }
 
 
@@ -123,19 +136,22 @@ section.products>article {
 
 }
 
-section.products .divImage :nth-child(3) {
+section.products .divHeart :nth-child(2) {
 
-  opacity: 0;
+  display: none;
 
-  &:hover {
 
-    opacity: 100%;
-  }
+}
+
+section.products .divHeart:hover  :nth-child(2){
+
+  display: block;
 }
 
 
 
-section.products .divImage i {
+section.products .divImage i,
+.divHeart {
 
   position: absolute;
   top: 7px;
@@ -144,6 +160,7 @@ section.products .divImage i {
   font-size: 1.2em;
   opacity: 60%;
   transition: .3s;
+
 
 }
 
@@ -302,7 +319,7 @@ header .filterSearchDiv button,
 
   &:hover {
 
-    background: var(--blue-grey);
+    background-color: var(--blue-grey);
   }
 
 
@@ -318,7 +335,7 @@ header .filterSearchDiv {
 }
 
 header .filterSearchDiv {
-  /* position: absolute; */
+  
   width: 100%;
   max-width: 600px;
   min-width: 100px;
@@ -395,11 +412,11 @@ header .filterSearchDiv button {
 header ul {
  
   min-width:fit-content ;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 header ul div {
-  padding: 5px;
+  padding: 0 5px;
   color: var(--black);
   font-family: var(--texto);
   font-weight: 600;
@@ -457,7 +474,7 @@ header .filterSearchDiv i {
 footer{
   position: relative;
   background: var(--light-grey);
-  height: 200px;
+  height: 130px;
   margin-top: 80px;
   border-top: 2px solid var(--blue-grey);
 
@@ -465,7 +482,7 @@ footer{
 
 footer ul {
 
-  padding-top: 50px;
+  padding-top: 0px;
 }
 
 
@@ -496,10 +513,126 @@ footer ul div {
 }
 
 .making {
+  position: absolute;
   font-size: 15px;
   padding-top: 50px;
   bottom: 5px;
   width: 100%;
+
+}
+
+@media  (max-width: 1000px){
+
+  header {
+    align-items: flex-start;
+
+   
+  }
+  header .filterSearchDiv {
+      position: absolute; 
+      padding: 0 10px;
+      min-width: 100%;
+      bottom: 5px;
+      left: 0;
+        
+    }
+}
+  
+@media (max-width: 770px){
+
+  main {
+
+    flex-direction: column;
+  }
+
+  section.filter , section  .filterPriceDiv {
+
+    min-width: 100%;
+  }
+
+  section.products {
+    padding-top: 50px;
+    justify-content: center;
+    
+    min-width: 100%;
+  }
+
+}
+
+@media  (max-width:600px){
+  
+  header ul {
+      margin-left: 15px;
+    width: 60%;
+      padding: 0;
+  }
+
+  header ul div {
+    
+      font-size: 8px;
+  
+    }
+  
+    header ul div>i {
+  
+      font-size: 1.2rem;
+    }
+
+    header .divLogoHeader {
+
+    
+      width: 30%;
+    }
+
+    header .logoHeader {
+
+      width: 100%;
+    }
+
+        footer ul div {
+          width: 35px;
+          height: 35px;
+          font-size: 1.2rem;
+        
+        }
+
+}
+
+@media (max-width:500px) {
+
+  header ul div{
+
+   padding: 0;
+
+  }
+
+  header ul div>i {
+
+    font-size: 1.2rem;
+  }
+
+  header .divLogoHeader {
+
+
+    width: 150px;
+  }
+
+  header .logoHeader {
+
+    width: 100%;
+  }
+
+main .divTitleProducts h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+main .divTitleProducts h3 {
+
+  font-size: 25px;
+ 
+
+}
 
 }
 

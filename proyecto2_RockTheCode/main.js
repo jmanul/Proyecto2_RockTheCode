@@ -160,16 +160,20 @@ const itenRss = [
 const productSection = document.querySelector('section.products');
 const header = document.querySelector('header');
 const footer = document.querySelector('footer');
+const main = document.querySelector('main');
 
 
 const divLogoHeader = document.createElement('div');
 divLogoHeader.className = 'divLogoHeader';
 header.append(divLogoHeader);
 
+const h1LogoHeader = document.createElement('h1');
+divLogoHeader.append(h1LogoHeader);
+
 const logoHeader = document.createElement('img');
 logoHeader.className = 'logoHeader';
 logoHeader.src = 'full-logo.svg'
-divLogoHeader.append(logoHeader);
+h1LogoHeader.append(logoHeader);
 
 const filterSearchDiv = document.createElement('div');
 filterSearchDiv.classList.add('filterSearchDiv', 'flex-container');
@@ -189,6 +193,12 @@ filterSearchDiv.append(filterSearchButton);
 const filterSearchIcon = document.createElement('i');
 filterSearchIcon.className = 'bi bi-search';
 filterSearchButton.append(filterSearchIcon);
+
+const divTitleProducts = document.createElement('div');
+divTitleProducts.classList.add('flex-container' , 'divTitleProducts');
+divTitleProducts.innerHTML = `      <h2>DESCUBRE NUESTRA MARCA</h2>
+      <h3 class='flex-container'>   <div><img src="miniatura.png" alt="logo de planeta huerto"></div> PLANETA HUERTO</h3>`;
+main.append(divTitleProducts);
 
 const createList = (list, section) => {
 
@@ -246,13 +256,17 @@ const createArticle = (list) => {
     productImage.src = product.image;
     productDivImage.append(productImage);
 
+    const productDivHeart = document.createElement('div');
+    productDivHeart.className = 'divHeart';
+    productDivImage.append(productDivHeart);
+
     const productHeart = document.createElement('i');
-    productHeart.className = 'bi bi-heart';
-    productDivImage.append(productHeart);
+    productHeart.classList = 'bi bi-heart';
+    productDivHeart.append(productHeart);
 
     const productHeartHover = document.createElement('i');
     productHeartHover.className = 'bi bi-heart-fill';
-    productDivImage.append(productHeartHover);
+    productDivHeart.append(productHeartHover);
 
     const productSeller = document.createElement('p');
     productSeller.id = 'seller';
@@ -459,8 +473,8 @@ filterSelectSeller.addEventListener('change', searchOptionSeller);
 filterPriceButton.onclick = searchOptionPrice;
 filterResetButton.onclick = resetOption;
 filterSearchButton.onclick = searchOptionName;
-footer.classList.add('flex-container');
 
+footer.classList.add('flex-container');
 const footerMaking = document.createElement('div');
 footerMaking.classList.add('flex-container', 'making');
 footer.append(footerMaking);
