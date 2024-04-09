@@ -172,7 +172,7 @@ divLogoHeader.append(h1LogoHeader);
 
 const logoHeader = document.createElement('img');
 logoHeader.className = 'logoHeader';
-logoHeader.src = 'dist/assets/full-logo.svg'
+logoHeader.src = 'assets/full-logo.svg'
 h1LogoHeader.append(logoHeader);
 
 const filterSearchDiv = document.createElement('div');
@@ -197,7 +197,7 @@ filterSearchButton.append(filterSearchIcon);
 const divTitleProducts = document.createElement('div');
 divTitleProducts.classList.add('flex-container' , 'divTitleProducts');
 divTitleProducts.innerHTML = `      <h2>DESCUBRE NUESTRA MARCA</h2>
-      <h3 class='flex-container'>   <div><img src="dist/assets/miniatura.png" alt="logo de planeta huerto"></div> PLANETA HUERTO</h3>`;
+      <h3 class='flex-container'>   <div><img src="assets/miniatura.png" alt="logo de planeta huerto"></div> PLANETA HUERTO</h3>`;
 main.append(divTitleProducts);
 
 const createList = (list, section) => {
@@ -387,46 +387,171 @@ filterResetButton.innerText = 'Limpiar Filtros';
 filterSection.append(filterResetButton);
 
 
+// todo copiado de array
+
+
+let filterSearchAll = [{
+  name: 'juanito',
+  icon: 'bi bi-facebook',
+  URL: '#'
+},
+  {
+    name: 'juanito',
+    icon: 'bi bi-facebook',
+    URL: '#'
+  }
+];
+let filterPriceAll = [{
+  name: 'juanito',
+  icon: 'bi bi-facebook',
+  URL: '#'
+}];
+let filterSellerAll = [{
+  name: '',
+  icon: 'bi bi-facebook',
+  URL: '#'
+}];
+let filterAllCopy = [];
+let filterAll = [];
+
+
+//! union de filtros activos
+
+const unionFilterList = (list1, list2) => {
+
+  for (let i = 0; i < list1.length; i++) {
+    const element1 = list1[i];
+      
+    for (let j = 0; j < list2.length; j++) {
+      const element2 = list2[j];
+
+      if (element1.name === element2.name) {
+
+        filterAll = list2.slice(j, j + 1);
+      
+      }
+    }
+  }
+}
+
+unionFilterList(filterPriceAll, filterSearchAll);
+
+
+//! seleccion de lista de inicio de filtro
+
+
+
+const selecList = () => {
+
+  
+  if (filterAllCopy.length == 0) {
+
+    filterAll = products.slice();
+
+
+  } else {
+
+    filterAll = filterAllCopy.slice();
+    console.log(filterAll);
+
+  }
+        
+}
+
+selecList()
+
+
+//* filtrado por vendedor
 
 const searchOptionSeller = (e) => {
 
-  const searchOptionSellerList = [];
+  const searchOptionSellerList = productsCopy.slice();
 
   productSection.innerHTML = ``;
 
-  for (const product of products) { 
-   
-    if (e.target.value === product.seller) {
   
-      searchOptionSellerList.push(product);
+  for (let i = 0; i < searchOptionSellerList.length; i++) {
+    
+    let product = searchOptionSellerList[i];
+   
+    if ((e.target.value !== product.seller && searchOptionSellerList.length == 1)) {
       
-    } else if (e.target.value === '') {
+      searchOptionSellerList.splice(i, 1);
+     
+
+      productSection.innerHTML = `<div class="info">
+             <p>No hay resultados</p>
+          </div>`;
+        
+      productSection.style.height = '100vh';
       
-      createArticle(products);
+    }  else if (e.target.value === '') {
+      
+      createArticle(productsCopy);
       return;
+      
+    } else if (e.target.value !== product.seller) {
+
+ 
+      searchOptionSellerList.splice(i, 1);
+      i--;
     }
+
+  
   }
 
+  for (const product of searchOptionSellerList) { 
+
+    searchOptionListAll.push(product); 
+    
+  }
+
+
+  console.log(searchOptionListAll);
+
   createArticle(searchOptionSellerList);
+
+
 }
+
 
 const searchOptionPrice = () => { 
 
-  const searchOptionPriceList = [];
-
+  console.log(searchOptionListAll);
+  let count = 0;
   productSection.innerHTML = ``;
 
-  for (const product of products) {
 
+  for (let i = 0; i < searchOptionListAll.length; i++) {
+ 
+    let product = searchOptionListAll[i];
 
-    if (filterPriceInput.value > product.price) {
+    if (filterPriceInput.value < product.price && searchOptionListAll.length == 1) {
+
+      searchOptionListAll.splice(i, 1);
+
+      productSection.innerHTML = `<div class="info">
+             <p>No hay resultados</p>
+          </div>`;
       
-      searchOptionPriceList.push(product);
-    }
+      productSection.style.height = '100vh';
 
+      
+
+    } else if (filterPriceInput.value < product.price) {
+
+      searchOptionListAll.splice(i, 1);
+
+      i--;
+     
+    } 
+  }
+    
+  createArticle(searchOptionListAll);
+ 
 }
-  createArticle(searchOptionPriceList);  
-}
+
+
 
 const resetOption = () => { 
 
@@ -435,6 +560,7 @@ const resetOption = () => {
   filterPriceInput.value = 0;
   filterSelectSeller.value = '';
   filterSearchInput.value = '';
+
 
 }
 
@@ -460,6 +586,14 @@ const searchOptionName = () => {
     
       createArticle(products);
       return;
+    } else {
+      
+      productSection.innerHTML = `<div class="info">
+        <p>No hay resultados</p>
+      </div>`;
+
+      productSection.style.height = '100vh';
+      
      }
 
   }
@@ -479,3 +613,83 @@ const footerMaking = document.createElement('div');
 footerMaking.classList.add('flex-container', 'making');
 footer.append(footerMaking);
 footerMaking.innerHTML = `<span class="flex-container"><strong>Hecho por José Manuel Sánchez</strong><div class="pasttri-logo"><img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1710357027/pasttri_gstn60.webp" alt="logo pasttri"></div></span>`;
+
+
+// const searchOptionSeller = (e) => {
+
+//   const searchOptionSellerList = [];
+
+//   productSection.innerHTML = ``;
+
+//   for (const product of products) {
+
+//     if (e.target.value === product.seller) {
+
+//       searchOptionSellerList.push(product);
+
+//     } else if (e.target.value === '') {
+
+//       createArticle(products);
+//       return;
+//     }
+//   }
+
+//   createArticle(searchOptionSellerList);
+// }
+
+// const searchOptionPrice = () => {
+
+//   const searchOptionPriceList = [];
+
+//   productSection.innerHTML = ``;
+
+//   for (const product of products) {
+
+
+//     if (filterPriceInput.value > product.price) {
+
+//       searchOptionPriceList.push(product);
+//     }
+
+//   }
+//   createArticle(searchOptionPriceList);
+// }
+
+// const resetOption = () => {
+
+//   productSection.innerHTML = ``;
+//   createArticle(products);
+//   filterPriceInput.value = 0;
+//   filterSelectSeller.value = '';
+//   filterSearchInput.value = '';
+
+// }
+
+// const searchOptionName = () => {
+
+//   const searchOptionNameList = [];
+
+//   productSection.innerHTML = ``;
+
+//   for (const product of products) {
+//     const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+//     const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+
+//     if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
+
+//       searchOptionNameList.push(product);
+
+
+//     } else if (filterSearchInput.value === '') {
+
+
+//       createArticle(products);
+//       return;
+//     }
+
+//   }
+//   createArticle(searchOptionNameList);
+
+// }
