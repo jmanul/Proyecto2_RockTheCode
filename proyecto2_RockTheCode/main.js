@@ -153,7 +153,7 @@ const itenRss = [
     icon: 'bi bi-tiktok',
     URL: '#'
   }
-  
+
 ]
 
 
@@ -195,7 +195,7 @@ filterSearchIcon.className = 'bi bi-search';
 filterSearchButton.append(filterSearchIcon);
 
 const divTitleProducts = document.createElement('div');
-divTitleProducts.classList.add('flex-container' , 'divTitleProducts');
+divTitleProducts.classList.add('flex-container', 'divTitleProducts');
 divTitleProducts.innerHTML = `      <h2>DESCUBRE NUESTRA MARCA</h2>
       <h3 class='flex-container'>   <div><img src="assets/miniatura.png" alt="logo de planeta huerto"></div> PLANETA HUERTO</h3>`;
 main.append(divTitleProducts);
@@ -205,9 +205,9 @@ const createList = (list, section) => {
   const ulList = document.createElement('ul');
   ulList.className = 'flex-container';
   section.append(ulList);
-  
+
   for (let i = 0; i < list.length; i++) {
-      
+
     const iten = list[i]
 
     const liList = document.createElement('li');
@@ -240,7 +240,7 @@ const createArticle = (list) => {
   for (let i = 0; i < list.length; i++) {
 
     const product = list[i]
- 
+
     const productArticle = document.createElement('article');
     productSection.append(productArticle);
 
@@ -315,9 +315,9 @@ const createArticle = (list) => {
     productInput.type = 'button';
     productInput.value = 'Añadir a carrito';
     productArticle.append(productInput);
- 
 
- 
+
+
 
   };
 };
@@ -339,7 +339,7 @@ filterOptionSeller.innerText = 'Marcas';
 filterSelectSeller.append(filterOptionSeller);
 
 const optionSellerCreate = (clave, list) => {
-  
+
   const listItem = [];
 
   for (const item of list) {
@@ -347,7 +347,7 @@ const optionSellerCreate = (clave, list) => {
     for (const i in item) {
 
       if (!listItem.includes(item[i]) && i === clave) {
-        
+
         const filterOptionSeller = document.createElement('option');
         filterOptionSeller.value = item[i];
         filterOptionSeller.innerText = item[i];
@@ -355,8 +355,8 @@ const optionSellerCreate = (clave, list) => {
         listItem.push(item[i]);
 
       }
- 
-    }  
+
+    }
 
   };
 };
@@ -364,7 +364,7 @@ const optionSellerCreate = (clave, list) => {
 optionSellerCreate('seller', products);
 
 const filterPriceDiv = document.createElement('div');
-filterPriceDiv.classList.add('filterPriceDiv','flex-container');
+filterPriceDiv.classList.add('filterPriceDiv', 'flex-container');
 filterSection.append(filterPriceDiv);
 
 
@@ -387,63 +387,102 @@ filterResetButton.innerText = 'Limpiar Filtros';
 filterSection.append(filterResetButton);
 
 
-// todo copiado de array
+//*listas para filtros 
 
 
-let filterSearchAll = [{
-  name: 'juanito',
-  icon: 'bi bi-facebook',
-  URL: '#'
-},
-  {
-    name: 'juanito',
-    icon: 'bi bi-facebook',
-    URL: '#'
-  }
-];
-let filterPriceAll = [{
-  name: 'juanito',
-  icon: 'bi bi-facebook',
-  URL: '#'
-}];
-let filterSellerAll = [{
-  name: '',
-  icon: 'bi bi-facebook',
-  URL: '#'
-}];
+let filterSearchAll = [];
+let filterPriceAll = [];
+let filterSellerAll = [];
+
+let filterAllResult = [];
 let filterAllCopy = [];
 let filterAll = [];
 
+// todo añadir las listas al array allList
 
-//! union de filtros activos
+const allList = [];
 
-const unionFilterList = (list1, list2) => {
+//? union de filtros activos 
 
-  for (let i = 0; i < list1.length; i++) {
-    const element1 = list1[i];
-      
-    for (let j = 0; j < list2.length; j++) {
-      const element2 = list2[j];
+const unionFilterListAutomatica = () => {
 
-      if (element1.name === element2.name) {
+  for (const list of allList) {
 
-        filterAll = list2.slice(j, j + 1);
-      
-      }
+    for (let j = 0; j < list.length; j++) {
+
+      const element = list[j];
+
+      console.log(element)
+
+      filterAll.push(element, j);
     }
+
   }
+
+}
+unionFilterListAutomatica()
+
+
+//! aplicacion de filtros
+
+const actionFilterList = () => {
+
+  
+
+  for (let i = 0; i < filterAll.length; i++) {
+     
+    let cont = 0;
+
+    const element1 = filterAll[i];
+
+     if (element1.name === undefined) {
+      
+       filterAll.splice(i, 1);
+       i--;
+     }
+
+    for (let j = 0; j < filterAll.length; j++) {
+
+
+      const element2 = filterAll[j];
+
+       if (element2.name === undefined) {
+
+         filterAll.splice(j, 1);
+         j--;
+
+       } else 
+      if (element1.name == element2.name && cont == allList.length - 1) {
+        
+        filterAllResult.push(element1);
+
+        filterAll.splice(i, 1);
+        i--;
+
+        cont = 0;
+      
+      } else if (element1.name == element2.name) {
+        
+        cont++;
+        
+      }
+      
+    }
+
+  }
+
 }
 
-unionFilterList(filterPriceAll, filterSearchAll);
+ actionFilterList();
 
 
-//! seleccion de lista de inicio de filtro
+// //! seleccion de lista de inicio de filtro
 
 
 
 const selecList = () => {
 
-  
+
   if (filterAllCopy.length == 0) {
 
     filterAll = products.slice();
@@ -455,7 +494,7 @@ const selecList = () => {
     console.log(filterAll);
 
   }
-        
+
 }
 
 selecList()
@@ -469,41 +508,41 @@ const searchOptionSeller = (e) => {
 
   productSection.innerHTML = ``;
 
-  
+
   for (let i = 0; i < searchOptionSellerList.length; i++) {
-    
+
     let product = searchOptionSellerList[i];
-   
+
     if ((e.target.value !== product.seller && searchOptionSellerList.length == 1)) {
-      
+
       searchOptionSellerList.splice(i, 1);
-     
+
 
       productSection.innerHTML = `<div class="info">
              <p>No hay resultados</p>
           </div>`;
-        
+
       productSection.style.height = '100vh';
-      
-    }  else if (e.target.value === '') {
-      
+
+    } else if (e.target.value === '') {
+
       createArticle(productsCopy);
       return;
-      
+
     } else if (e.target.value !== product.seller) {
 
- 
+
       searchOptionSellerList.splice(i, 1);
       i--;
     }
 
-  
+
   }
 
-  for (const product of searchOptionSellerList) { 
+  for (const product of searchOptionSellerList) {
 
-    searchOptionListAll.push(product); 
-    
+    searchOptionListAll.push(product);
+
   }
 
 
@@ -515,7 +554,7 @@ const searchOptionSeller = (e) => {
 }
 
 
-const searchOptionPrice = () => { 
+const searchOptionPrice = () => {
 
   console.log(searchOptionListAll);
   let count = 0;
@@ -523,7 +562,7 @@ const searchOptionPrice = () => {
 
 
   for (let i = 0; i < searchOptionListAll.length; i++) {
- 
+
     let product = searchOptionListAll[i];
 
     if (filterPriceInput.value < product.price && searchOptionListAll.length == 1) {
@@ -533,27 +572,27 @@ const searchOptionPrice = () => {
       productSection.innerHTML = `<div class="info">
              <p>No hay resultados</p>
           </div>`;
-      
+
       productSection.style.height = '100vh';
 
-      
+
 
     } else if (filterPriceInput.value < product.price) {
 
       searchOptionListAll.splice(i, 1);
 
       i--;
-     
-    } 
+
+    }
   }
-    
+
   createArticle(searchOptionListAll);
- 
+
 }
 
 
 
-const resetOption = () => { 
+const resetOption = () => {
 
   productSection.innerHTML = ``;
   createArticle(products);
@@ -570,34 +609,34 @@ const searchOptionName = () => {
 
   productSection.innerHTML = ``;
 
-  for (const product of products) {   
-   const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-   
-   const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-  
+  for (const product of products) {
+    const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+    const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
 
     if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
-     
+
       searchOptionNameList.push(product);
-    
+
 
     } else if (filterSearchInput.value === '') {
-      
-    
+
+
       createArticle(products);
       return;
     } else {
-      
+
       productSection.innerHTML = `<div class="info">
         <p>No hay resultados</p>
       </div>`;
 
       productSection.style.height = '100vh';
-      
-     }
+
+    }
 
   }
-   createArticle(searchOptionNameList);  
+  createArticle(searchOptionNameList);
 
 }
 
