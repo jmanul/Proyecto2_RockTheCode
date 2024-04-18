@@ -389,204 +389,268 @@ filterSection.append(filterResetButton);
 
 //*listas para filtros 
 
+let filterSeller = [];
+let filterPrice = [];
+let filterSearch = []; //listas individuales de  filtros
 
-let filterSearchAll = [];
-let filterPriceAll = [];
-let filterSellerAll = [];
 
-let filterAllResult = [];
-let filterAllCopy = [];
-let filterAll = [];
+let filterAllCopy = []; // lista de inicio 
+let filterAllResultCopy = []; //version anterior 
+let allList = []; // lista de todas las listas filtradas
+let filterAll = []; // suma de productos de todos los filtros
+let filterAllResult = []; // resultado acumulado de filtos
 
-// todo añadir las listas al array allList
 
-const allList = [];
+//! quitar listas al array de listas -> funciona
 
-//? union de filtros activos 
+const removeList = (list) => {
 
-const unionFilterListAutomatica = () => {
+  for (const element of allList) {
 
-  for (const list of allList) {
+    if (element === list) {
 
-    for (let j = 0; j < list.length; j++) {
+      allList.splice(element, 1);
 
-      const element = list[j];
+      for (let i = 0; i < filterAll.length; i++) { 
 
-      console.log(element)
+        const element1 = filterAll[i];
 
-      filterAll.push(element, j);
+        for (let j = 0; j < list.length; j++) {
+
+          const element2 = list[j];
+
+          if (element1 == element2) {
+
+            filterAll.splice(i, 1);
+            i--;
+            list.splice(j, 1);
+            j--;
+
+          }
+        }
+      }
     }
-
   }
 
 }
-unionFilterListAutomatica()
 
+//! quita lementos de la lista de un filtro ->  funciona
 
-//! aplicacion de filtros
+const removeElements = (list) => {
 
-const actionFilterList = () => {
-
-  
+  // filterAllCopy = filterAllResult.slice();
 
   for (let i = 0; i < filterAll.length; i++) {
-     
-    let cont = 0;
 
     const element1 = filterAll[i];
 
-     if (element1.name === undefined) {
-      
-       filterAll.splice(i, 1);
-       i--;
-     }
+    for (let j = 0; j < filterAllResult.length; j++) {
 
-    for (let j = 0; j < filterAll.length; j++) {
+      const element2 = filterAllResult[j];
 
+      if (element1 == element2) {
 
-      const element2 = filterAll[j];
+        for (let k = 0; k < list.length; k++) {
 
-       if (element2.name === undefined) {
+          const element3 = list[k];
 
-         filterAll.splice(j, 1);
-         j--;
+          if (element1 == element3) {
 
-       } else 
-      if (element1.name == element2.name && cont == allList.length - 1) {
-        
-        filterAllResult.push(element1);
+            list.splice(k, 1);
+            k--;
+
+          }
+        }
 
         filterAll.splice(i, 1);
         i--;
+        filterAllResult.splice(j, 1);
+        j--;
 
-        cont = 0;
-      
-      } else if (element1.name == element2.name) {
-        
-        cont++;
-        
       }
-      
     }
-
   }
-
+  removeList(list)
 }
 
- actionFilterList();
+//! introducimos listas al array de listas -> funciona
+
+const addList = (list) => {
+
+  allList.push(list);
+}
 
 
-// //! seleccion de lista de inicio de filtro
+//! seleccion de lista de inicio de filtro -> funciona
 
 
 
 const selecList = () => {
 
 
-  if (filterAllCopy.length == 0) {
+    filterAllCopy = products.slice();
 
-    filterAll = products.slice();
+}
 
+
+
+//! union de filtros activos -> funciona
+
+const unionFilterListAut = (list) => {
+
+  for (const element of list) {
+
+    filterAll.push(element);
+
+  }
+
+}
+
+
+//! aplicacion de filtros -> funciona
+
+const actionFilterList = () => {
+
+  filterAllResultCopy = filterAll.slice();
+
+  for (let i = 0; i < filterAll.length; i++) {
+
+    let cont = 0;
+
+    const element1 = filterAll[i];
+
+    for (let j = 0; j < filterAllResultCopy.length; j++) {
+
+      const element2 = filterAllResultCopy[j];
+
+      if (element1 == element2 && cont == (allList.length - 1)) {
+
+        filterAllResult.push(element1);
+        filterAllResultCopy.splice(j, 1);
+        j--;
+
+        cont = 0;
+
+      } else if (element1 == element2) {
+
+        filterAllResultCopy.splice(j, 1);
+        j--;
+
+        cont++;
+
+      }
+    }
+  }
+}
+
+
+// ! resultado del filtro
+
+const printFilters = () => {
+
+  productSection.innerHTML = ``;
+
+
+  if (filterAllResult.length == 0) {
+
+    productSection.innerHTML = `<div class="info">
+             <p>No hay resultados</p>
+          </div>`;
+
+    productSection.style.height = '100vh';
 
   } else {
 
-    filterAll = filterAllCopy.slice();
-    console.log(filterAll);
-
+    createArticle(filterAllResult);
   }
+}
+
+//! inicio filtrado
+
+const initFilter = (list) => {
+
+
+  removeElements(list);
+  selecList();
+}
+
+//! fin filtrado
+
+const endFilter = (list) => {
+
+  addList(list);
+  unionFilterListAut(list)
+  actionFilterList();
+  printFilters();
 
 }
 
-selecList()
 
 
-//* filtrado por vendedor
+//! filtrado por vendedor
 
 const searchOptionSeller = (e) => {
+  console.log(filterAll);
+  console.log(filterSeller);
 
-  const searchOptionSellerList = productsCopy.slice();
-
-  productSection.innerHTML = ``;
-
-
-  for (let i = 0; i < searchOptionSellerList.length; i++) {
-
-    let product = searchOptionSellerList[i];
-
-    if ((e.target.value !== product.seller && searchOptionSellerList.length == 1)) {
-
-      searchOptionSellerList.splice(i, 1);
+  initFilter(filterSeller);
 
 
-      productSection.innerHTML = `<div class="info">
-             <p>No hay resultados</p>
-          </div>`;
+  for (let i = 0; i < filterAllCopy.length; i++) {
 
-      productSection.style.height = '100vh';
+    let product = filterAllCopy[i];
+
+    if (e.target.value === product.seller) {
+
+      filterSeller.push(product);
 
     } else if (e.target.value === '') {
 
-      createArticle(productsCopy);
+      createArticle(filterAllResult);
       return;
 
-    } else if (e.target.value !== product.seller) {
-
-
-      searchOptionSellerList.splice(i, 1);
-      i--;
     }
-
-
   }
 
-  for (const product of searchOptionSellerList) {
-
-    searchOptionListAll.push(product);
-
-  }
-
-
-  console.log(searchOptionListAll);
-
-  createArticle(searchOptionSellerList);
-
+  endFilter(filterSeller);
+  console.log(filterAll);
+  console.log(filterSeller);
+  console.log(allList)
 
 }
 
 
+//! filtrado por precio inferior
+
 const searchOptionPrice = () => {
 
-  console.log(searchOptionListAll);
-  let count = 0;
-  productSection.innerHTML = ``;
+  console.log(filterAll);
+  console.log(filterAllResult);
+  console.log(allList)
+  initFilter(filterPrice);
+  console.log(filterAllCopy);
+  console.log(filterAll);
+  console.log(allList)
+  
 
+  for (let i = 0; i < filterAllCopy.length; i++) {
 
-  for (let i = 0; i < searchOptionListAll.length; i++) {
+    let product = filterAllCopy[i];
 
-    let product = searchOptionListAll[i];
+    if (filterPriceInput.value > product.price) {
 
-    if (filterPriceInput.value < product.price && searchOptionListAll.length == 1) {
-
-      searchOptionListAll.splice(i, 1);
-
-      productSection.innerHTML = `<div class="info">
-             <p>No hay resultados</p>
-          </div>`;
-
-      productSection.style.height = '100vh';
-
-
-
-    } else if (filterPriceInput.value < product.price) {
-
-      searchOptionListAll.splice(i, 1);
-
-      i--;
+      filterPrice.push(product);
 
     }
   }
+  console.log(filterPrice);
 
-  createArticle(searchOptionListAll);
+  endFilter(filterPrice);
+
+  console.log(filterAll);
+  console.log(filterPrice);
+  console.log(filterAllResult);
+  console.log(allList);
 
 }
 
@@ -605,9 +669,7 @@ const resetOption = () => {
 
 const searchOptionName = () => {
 
-  const searchOptionNameList = [];
-
-  productSection.innerHTML = ``;
+  initFilter(filterSearch);
 
   for (const product of products) {
     const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -617,27 +679,19 @@ const searchOptionName = () => {
 
     if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
 
-      searchOptionNameList.push(product);
+      filterSearch.push(product);
 
 
     } else if (filterSearchInput.value === '') {
 
 
-      createArticle(products);
+      printFilters();
       return;
-    } else {
-
-      productSection.innerHTML = `<div class="info">
-        <p>No hay resultados</p>
-      </div>`;
-
-      productSection.style.height = '100vh';
-
     }
 
   }
-  createArticle(searchOptionNameList);
 
+  endFilter(filterSearch)
 }
 
 
