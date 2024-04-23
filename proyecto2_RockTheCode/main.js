@@ -401,6 +401,7 @@ let filterAll = []; // suma de productos de todos los filtros
 let filterAllResult = []; // resultado acumulado de filtos
 
 
+
 //! quitar listas al array de listas -> funciona
 
 const removeList = (list) => {
@@ -419,7 +420,7 @@ const removeList = (list) => {
 
           const element2 = list[j];
 
-          if (element1 == element2) {
+          if (element1.name == element2.name) {
 
             filterAll.splice(i, 1);
             i--;
@@ -434,7 +435,9 @@ const removeList = (list) => {
 
 }
 
-//! quita lementos de la lista de un filtro ->  funciona
+
+
+//! quita elementos coincidentes de la lista de un filtro ->  funciona
 
 const removeElements = (list) => {
 
@@ -448,13 +451,13 @@ const removeElements = (list) => {
 
       const element2 = filterAllResult[j];
 
-      if (element1 == element2) {
+      if (element1.name == element2.name) {
 
         for (let k = 0; k < list.length; k++) {
 
           const element3 = list[k];
 
-          if (element1 == element3) {
+          if (element1.name == element3.name) {
 
             list.splice(k, 1);
             k--;
@@ -473,6 +476,24 @@ const removeElements = (list) => {
   removeList(list)
 }
 
+//! compruebar si esta ya la lista actual
+
+const statusList = (list) => { 
+
+  for (const element of allList) {
+    
+    if (element === list) {
+      
+       removeElements(list);
+    } else {
+       
+      filterAllResult.length = 0;
+    
+    }
+    
+  }
+}
+
 //! introducimos listas al array de listas -> funciona
 
 const addList = (list) => {
@@ -488,7 +509,7 @@ const addList = (list) => {
 const selecList = () => {
 
 
-    filterAllCopy = products.slice();
+  filterAllCopy = structuredClone(products);
 
 }
 
@@ -511,7 +532,8 @@ const unionFilterListAut = (list) => {
 
 const actionFilterList = () => {
 
-  filterAllResultCopy = filterAll.slice();
+  // filterAllResultCopy = filterAll.slice();
+  filterAllResultCopy = structuredClone(filterAll);
 
   for (let i = 0; i < filterAll.length; i++) {
 
@@ -523,7 +545,7 @@ const actionFilterList = () => {
 
       const element2 = filterAllResultCopy[j];
 
-      if (element1 == element2 && cont == (allList.length - 1)) {
+      if (element1.name == element2.name && cont == (allList.length - 1)) {
 
         filterAllResult.push(element1);
         filterAllResultCopy.splice(j, 1);
@@ -531,18 +553,51 @@ const actionFilterList = () => {
 
         cont = 0;
 
-      } else if (element1 == element2) {
+      } else if (element1.name == element2.name) {
 
         filterAllResultCopy.splice(j, 1);
         j--;
 
         cont++;
-
+       
       }
     }
   }
 }
+// unionFilterListAut(filterPrice)
+// unionFilterListAut(filterSearch)
+// addList(filterPrice)
+// addList(filterSeller)
+//  unionFilterListAut(filterSeller)
 
+// console.log(allList)
+// console.log(filterAll)
+// console.log(filterAllResult)
+
+// actionFilterList()
+
+// console.log(allList)
+// console.log(filterAll)
+// console.log(filterAllResult)
+
+//  removeElements(filterPrice)
+
+// console.log(allList)
+// console.log(filterAll)
+// console.log(filterAllResult)
+
+// // unionFilterListAut(filterPrice)
+//  actionFilterList()
+
+// console.log(allList)
+// console.log(filterAll)
+// console.log(filterAllResult)
+
+// // removeElements(filterSearch)
+
+// console.log(allList)
+// console.log(filterAll)
+// console.log(filterAllResult)
 
 // ! resultado del filtro
 
@@ -570,7 +625,7 @@ const printFilters = () => {
 const initFilter = (list) => {
 
 
-  removeElements(list);
+  statusList(list);
   selecList();
 }
 
@@ -643,12 +698,13 @@ const searchOptionPrice = () => {
 
     }
   }
-  console.log(filterPrice);
+  
 
   endFilter(filterPrice);
 
   console.log(filterAll);
   console.log(filterPrice);
+  console.log(filterSeller)
   console.log(filterAllResult);
   console.log(allList);
 
@@ -657,7 +713,16 @@ const searchOptionPrice = () => {
 
 
 const resetOption = () => {
-
+   filterSeller.length = 0;
+   filterPrice.length = 0;
+  filterSearch.length = 0;
+  
+   filterAllCopy.length = 0; 
+   filterAllResultCopy.length = 0;  
+   allList.length = 0; 
+   filterAll.length = 0; 
+   filterAllResult.length = 0; 
+  
   productSection.innerHTML = ``;
   createArticle(products);
   filterPriceInput.value = 0;

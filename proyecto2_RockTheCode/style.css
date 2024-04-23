@@ -648,5 +648,10 @@ main .divTitleProducts h3 {
 
 }
 
+section.products>article {
+
+  max-width: 210px;
+}
+
 }
 
