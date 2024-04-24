@@ -59,8 +59,8 @@ const products = [
     image: 'https://cdn2.planetahuerto.es/estaticos/imagenes/ficha/959/959_1.jpg?fit=crop&w=184&h=184&fm=webp&q=100'
   },
   {
-    name: 'Conjunto de armario JLine Alto+Bajo',
-    price: 108,
+    name: 'Armario JLine Alto+Bajo',
+    price: 148,
     stars: 4.2,
     reviews: 13,
     seller: 'jobgar',
@@ -395,23 +395,25 @@ let filterSearch = []; //listas individuales de  filtros
 
 
 let filterAllCopy = []; // lista de inicio 
-let filterAllResultCopy = []; //version anterior 
+let filterAllResultCopy = []; //lista copia par iterar
 let allList = []; // lista de todas las listas filtradas
 let filterAll = []; // suma de productos de todos los filtros
 let filterAllResult = []; // resultado acumulado de filtos
 
 
 
-//! quitar listas al array de listas -> funciona
+//! quitar listas al array de listas 
 
-const removeList = (list) => {
+const removeList = (list , item) => {
 
-  for (const element of allList) {
+  for (let i = 0; i < allList.length; i++) {
 
-    if (element === list) {
+    let element = allList[i];
 
-      allList.splice(element, 1);
+    if (element === item) {
 
+      allList.splice(i , 1);
+ 
       for (let i = 0; i < filterAll.length; i++) { 
 
         const element1 = filterAll[i];
@@ -437,11 +439,9 @@ const removeList = (list) => {
 
 
 
-//! quita elementos coincidentes de la lista de un filtro ->  funciona
+//! quita elementos coincidentes de la lista de un filtro 
 
-const removeElements = (list) => {
-
-  // filterAllCopy = filterAllResult.slice();
+const removeElements = (list , item) => {
 
   for (let i = 0; i < filterAll.length; i++) {
 
@@ -473,18 +473,19 @@ const removeElements = (list) => {
       }
     }
   }
-  removeList(list)
+  removeList(list ,item)
 }
 
 //! compruebar si esta ya la lista actual
 
-const statusList = (list) => { 
+const statusList = (list , item) => { 
 
   for (const element of allList) {
     
-    if (element === list) {
+    if (element.includes(item)) {
+     
+      removeElements(list , item);
       
-       removeElements(list);
     } else {
        
       filterAllResult.length = 0;
@@ -494,28 +495,21 @@ const statusList = (list) => {
   }
 }
 
-//! introducimos listas al array de listas -> funciona
+//! introducimos listas al array de listas 
 
-const addList = (list) => {
-
-  allList.push(list);
-}
-
-
-//! seleccion de lista de inicio de filtro -> funciona
+const addList = (item) => allList.push(item);
 
 
 
-const selecList = () => {
-
-
-  filterAllCopy = structuredClone(products);
-
-}
+//! seleccion de lista de inicio de filtro 
 
 
 
-//! union de filtros activos -> funciona
+const selecList = () => filterAllCopy = structuredClone(products);
+
+
+
+//! union de filtros activos 
 
 const unionFilterListAut = (list) => {
 
@@ -528,11 +522,10 @@ const unionFilterListAut = (list) => {
 }
 
 
-//! aplicacion de filtros -> funciona
+//! aplicacion de filtros 
 
 const actionFilterList = () => {
 
-  // filterAllResultCopy = filterAll.slice();
   filterAllResultCopy = structuredClone(filterAll);
 
   for (let i = 0; i < filterAll.length; i++) {
@@ -564,40 +557,7 @@ const actionFilterList = () => {
     }
   }
 }
-// unionFilterListAut(filterPrice)
-// unionFilterListAut(filterSearch)
-// addList(filterPrice)
-// addList(filterSeller)
-//  unionFilterListAut(filterSeller)
 
-// console.log(allList)
-// console.log(filterAll)
-// console.log(filterAllResult)
-
-// actionFilterList()
-
-// console.log(allList)
-// console.log(filterAll)
-// console.log(filterAllResult)
-
-//  removeElements(filterPrice)
-
-// console.log(allList)
-// console.log(filterAll)
-// console.log(filterAllResult)
-
-// // unionFilterListAut(filterPrice)
-//  actionFilterList()
-
-// console.log(allList)
-// console.log(filterAll)
-// console.log(filterAllResult)
-
-// // removeElements(filterSearch)
-
-// console.log(allList)
-// console.log(filterAll)
-// console.log(filterAllResult)
 
 // ! resultado del filtro
 
@@ -617,23 +577,24 @@ const printFilters = () => {
   } else {
 
     createArticle(filterAllResult);
+
+    productSection.style.height = '100%';
   }
 }
 
 //! inicio filtrado
 
-const initFilter = (list) => {
+const initFilter = (list , item) => {
 
-
-  statusList(list);
+  statusList(list, item);
   selecList();
 }
 
 //! fin filtrado
 
-const endFilter = (list) => {
+const endFilter = (list , item) => {
 
-  addList(list);
+  addList(item);
   unionFilterListAut(list)
   actionFilterList();
   printFilters();
@@ -645,10 +606,8 @@ const endFilter = (list) => {
 //! filtrado por vendedor
 
 const searchOptionSeller = (e) => {
-  console.log(filterAll);
-  console.log(filterSeller);
 
-  initFilter(filterSeller);
+  initFilter(filterSeller, 'filterSeller');
 
 
   for (let i = 0; i < filterAllCopy.length; i++) {
@@ -661,16 +620,12 @@ const searchOptionSeller = (e) => {
 
     } else if (e.target.value === '') {
 
-      createArticle(filterAllResult);
       return;
 
     }
   }
 
-  endFilter(filterSeller);
-  console.log(filterAll);
-  console.log(filterSeller);
-  console.log(allList)
+  endFilter(filterSeller, 'filterSeller');
 
 }
 
@@ -679,15 +634,8 @@ const searchOptionSeller = (e) => {
 
 const searchOptionPrice = () => {
 
-  console.log(filterAll);
-  console.log(filterAllResult);
-  console.log(allList)
-  initFilter(filterPrice);
-  console.log(filterAllCopy);
-  console.log(filterAll);
-  console.log(allList)
+  initFilter(filterPrice, 'filterPrice');
   
-
   for (let i = 0; i < filterAllCopy.length; i++) {
 
     let product = filterAllCopy[i];
@@ -700,19 +648,21 @@ const searchOptionPrice = () => {
   }
   
 
-  endFilter(filterPrice);
-
-  console.log(filterAll);
-  console.log(filterPrice);
-  console.log(filterSeller)
-  console.log(filterAllResult);
-  console.log(allList);
+  endFilter(filterPrice, 'filterPrice');
 
 }
 
 
 
 const resetOption = () => {
+   
+  productSection.innerHTML = ``;
+  createArticle(products);
+  filterPriceInput.value = 0;
+  filterSelectSeller.value = '';
+  filterSearchInput.value = '';
+  productSection.style.height = '100%';
+
    filterSeller.length = 0;
    filterPrice.length = 0;
   filterSearch.length = 0;
@@ -723,18 +673,11 @@ const resetOption = () => {
    filterAll.length = 0; 
    filterAllResult.length = 0; 
   
-  productSection.innerHTML = ``;
-  createArticle(products);
-  filterPriceInput.value = 0;
-  filterSelectSeller.value = '';
-  filterSearchInput.value = '';
-
-
 }
 
 const searchOptionName = () => {
 
-  initFilter(filterSearch);
+  initFilter(filterSearch, 'filterSearch');
 
   for (const product of products) {
     const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -748,15 +691,13 @@ const searchOptionName = () => {
 
 
     } else if (filterSearchInput.value === '') {
-
-
-      printFilters();
+      
       return;
     }
 
   }
 
-  endFilter(filterSearch)
+  endFilter(filterSearch, 'filterSearch');
 }
 
 
@@ -773,81 +714,3 @@ footer.append(footerMaking);
 footerMaking.innerHTML = `<span class="flex-container"><strong>Hecho por José Manuel Sánchez</strong><div class="pasttri-logo"><img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1710357027/pasttri_gstn60.webp" alt="logo pasttri"></div></span>`;
 
 
-// const searchOptionSeller = (e) => {
-
-//   const searchOptionSellerList = [];
-
-//   productSection.innerHTML = ``;
-
-//   for (const product of products) {
-
-//     if (e.target.value === product.seller) {
-
-//       searchOptionSellerList.push(product);
-
-//     } else if (e.target.value === '') {
-
-//       createArticle(products);
-//       return;
-//     }
-//   }
-
-//   createArticle(searchOptionSellerList);
-// }
-
-// const searchOptionPrice = () => {
-
-//   const searchOptionPriceList = [];
-
-//   productSection.innerHTML = ``;
-
-//   for (const product of products) {
-
-
-//     if (filterPriceInput.value > product.price) {
-
-//       searchOptionPriceList.push(product);
-//     }
-
-//   }
-//   createArticle(searchOptionPriceList);
-// }
-
-// const resetOption = () => {
-
-//   productSection.innerHTML = ``;
-//   createArticle(products);
-//   filterPriceInput.value = 0;
-//   filterSelectSeller.value = '';
-//   filterSearchInput.value = '';
-
-// }
-
-// const searchOptionName = () => {
-
-//   const searchOptionNameList = [];
-
-//   productSection.innerHTML = ``;
-
-//   for (const product of products) {
-//     const nameProductNormalize = product.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
-//     const valueInputNormalize = filterSearchInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
-
-//     if (nameProductNormalize.toLocaleUpperCase().includes(valueInputNormalize.toLocaleUpperCase())) {
-
-//       searchOptionNameList.push(product);
-
-
-//     } else if (filterSearchInput.value === '') {
-
-
-//       createArticle(products);
-//       return;
-//     }
-
-//   }
-//   createArticle(searchOptionNameList);
-
-// }
